@@ -1,0 +1,51 @@
+SelectiveProtection
+===================
+
+Overview
+--------
+
+While attr_proctected and attr_accessible are great for securing your Rails app, in some cases a bit more flexibility is desired. SelectiveProtection enables you to selectively allow mass assignment of normally protected attributes.
+
+
+Usage
+-----
+
+Example Classes (note that no special setup is required):
+
+  class BlacklistProtected < ActiveRecord::Base
+    attr_accessor :dangerous, :safe
+    attr_protected :dangerous
+  end
+  
+  class WhitelistProtected < ActiveRecord::Base
+    attr_accessor :dangerous, :safe
+    attr_accessible :safe
+  end
+  
+Standard behavior is maintained:
+
+  bp = BlacklistProtected.new(:dangerous => "dangerous")
+  bp.dangerous # => nil
+
+  wp = WhitelistProtected.new(:dangerous => "dangerous")
+  wp.dangerous # => nil
+
+Proxy form:
+
+  bp = BlacklistProtected.with_accessible(:dangerous).new(:dangerous => "dangerous")
+  bp.dangerous # => "dangerous"
+
+  wp = WhitelistProtected.with_accessible(:dangerous).new(:dangerous => "dangerous")
+  wp.dangerous # => "dangerous"
+  
+Block form:
+
+  BlacklistProtected.with_accessible(:dangerous) do
+    bp = BlacklistProtected.new(:dangerous => "dangerous")
+    bp.dangerous # => "dangerous"
+  end
+  
+  WhitelistProtected.with_accessible(:dangerous) do
+    wp = WhitelistProtected.new(:dangerous => "dangerous")
+    wp.dangerous # => "dangerous"
+  end
