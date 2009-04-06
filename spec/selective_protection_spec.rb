@@ -3,11 +3,11 @@ require File.join(File.dirname(__FILE__), 'spec_helper')
 class SelectivelyProtected < ActiveRecord::Base
   def self.columns; []; end # Avoid having a db table
   
-  attr_accessor :dangerous, :safe
+  attr_accessor :harmful, :dangerous, :safe
 end
 
 class BlacklistProtected < SelectivelyProtected
-  attr_protected :dangerous
+  attr_protected :dangerous, :harmful
 end
 
 class WhilelistProtected < SelectivelyProtected
@@ -56,6 +56,13 @@ describe SelectivelyProtected do
         sp2 = klass.new(:dangerous => "dangerous", :safe => "safe")
         sp2.dangerous.should be_nil
         sp2.safe.should == "safe"
+      end
+    
+      it "should not allow setting of attributes not explicitly allowed" do
+        sp = klass.with_accessible(:dangerous).new(:harmful => "harmful", :dangerous => "dangerous", :safe => "safe")
+        sp.harmful.should be_nil
+        sp.dangerous.should == "dangerous"
+        sp.safe.should == "safe"
       end
     
     end
