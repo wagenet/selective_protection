@@ -8,7 +8,8 @@ While attr_proctected and attr_accessible are great for securing your Rails app,
 h2. Usage
 
 h3. Example Classes
-note that no special setup is required
+
+_Note that no special setup is required_
 
 <pre><code>
   class BlacklistProtected < ActiveRecord::Base
@@ -21,6 +22,7 @@ note that no special setup is required
     attr_accessible :safe
   end
 </code></pre>
+
   
 h3. Standard behavior is maintained
 
@@ -32,8 +34,8 @@ h3. Standard behavior is maintained
   wp.dangerous # => nil
 </code></pre>
 
-h3. Proxy Form
 
+h3. Proxy Form
 <pre><code>
   bp = BlacklistProtected.with_accessible(:dangerous).new(:dangerous => "dangerous")
   bp.dangerous # => "dangerous"
@@ -41,6 +43,7 @@ h3. Proxy Form
   wp = WhitelistProtected.with_accessible(:dangerous).new(:dangerous => "dangerous")
   wp.dangerous # => "dangerous"
 </code></pre>
+
   
 h3. Block Form
 

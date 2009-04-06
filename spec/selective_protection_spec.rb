@@ -47,6 +47,16 @@ describe SelectivelyProtected do
         sp.dangerous.should == "dangerous"
         sp.safe.should == "safe"
       end
+      
+      it "should return to normal behavior" do
+        sp = klass.with_accessible(:dangerous).new(:dangerous => "dangerous", :safe => "safe")
+        sp.dangerous.should == "dangerous"
+        sp.safe.should == "safe"
+      
+        sp2 = klass.new(:dangerous => "dangerous", :safe => "safe")
+        sp2.dangerous.should be_nil
+        sp2.safe.should == "safe"
+      end
     
     end
   end
