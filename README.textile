@@ -5,6 +5,11 @@ h2. Overview
 While attr_proctected and attr_accessible are great for securing your Rails app, in some cases a bit more flexibility is desired. SelectiveProtection enables you to selectively allow mass assignment of normally protected attributes.
 
 
+h2. Requirements
+
+My ProxyBlock gem:
+<pre><code>gem install rxcfc-proxy_block</code></pre>
+
 h2. Usage
 
 h3. Example Classes
