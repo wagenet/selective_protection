@@ -49,7 +49,7 @@ h3. Proxy Form
   wp.dangerous # => "dangerous"
 </code></pre>
 
-  
+
 h3. Block Form
 
 <pre><code>
@@ -63,3 +63,29 @@ h3. Block Form
     wp.dangerous # => "dangerous"
   end
 </code></pre>
+
+h3. Associations
+
+<pre><code>
+  class Parent < ActiveRecord::Base
+    has_many :children
+  end
+
+  class Child < ActiveRecord::Base
+    belongs_to :parent
+    attr_protected :dangerous
+  end
+
+  p = Parent.new
+  
+  c1 = p.children.with_accessible(:dangerous) { p.children.build(:dangerous => "dangerous") }
+  c1.dangerous # => "dangerous"
+  
+  c2 = p.children.with_accessible(:dangerous).build(:dangerous => "dangerous")
+  c2.dangerous # => "dangerous"
+</code></pre>
+
+h2. Credits
+
+*Author:* Peter Wagenet (http://in.finitu.de)
+*Website:* http://github.com/rxcfc/selective_protection
