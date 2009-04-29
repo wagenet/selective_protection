@@ -85,6 +85,10 @@ h3. Associations
   c2.dangerous # => "dangerous"
 </code></pre>
 
+h3. Allow All Attributes
+
+Passing :all as the only parameter will allow all attributes to be mass assigned.
+
 h2. Credits
 
 *Author:* Peter Wagenet (http://in.finitu.de)
